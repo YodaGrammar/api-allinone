@@ -11,7 +11,7 @@ class readonly CreateActivityController {
         private ValidatorInterface $validator,1
     ){}
 
-    public function __invoke(Request $request){
+    public function __invoke(Request $request): JsonResponse {
 
         $activityDto = $this->serializer->deserialize($request->getContent(), CreateActivityRequestDto::class, 'json');
 
@@ -21,5 +21,9 @@ class readonly CreateActivityController {
             throw new InvalidJsonVerboseException($violations, CreateActivityRequestDto::class);
         }
 
+        return new JsonResponse(
+            $this->normalizer->normalize($useCase?),
+            Response::HTTP_CREATED
+        );
     }
 }
