@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-class readonly CreateActivityController {
+readonly class CreateActivityController {
 
     public function __construct(
         private SerializerInterface $serializer,
-        private ValidatorInterface $validator,1
+        private ValidatorInterface $validator,
     ){}
 
     public function __invoke(Request $request): JsonResponse {
@@ -22,7 +22,7 @@ class readonly CreateActivityController {
         }
 
         return new JsonResponse(
-            $this->normalizer->normalize($useCase?),
+            $this->normalizer->normalize($activityDto),
             Response::HTTP_CREATED
         );
     }
