@@ -24,10 +24,10 @@ help:
 ##---------------------------------------------------------------------------
 ##
 
-exec: ## Install SSL certificate in system trust store
-	@docker exec -it yg_php sh
+# exec: ## Install SSL certificate in system trust store
+# 	@docker exec -it yg_php sh
 
-composer:
+composer: ## permet d installe les packages
 	@docker exec yg_php composer $(args)
 
 ##

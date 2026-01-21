@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: yodagrammar/reusable-workflows/.github/actions/common/bump-version@v2.0.3
+      - uses: yodagrammar/reusable-workflows/.github/actions/common/bump-version@v0.0.1
         with:
           token: ${{ secrets.GH_PACKAGES_PAT }}
