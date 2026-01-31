@@ -2,31 +2,53 @@
 
 declare(strict_types=1);
 
+namespace App\RequestDto\Challenge;
+
+use App\Enum\PeriodicityEnum;
+use App\Enum\ChallengeUnitEnum;
+use App\Enum\ValidationCriteriaEnum;
 use Symfony\Component\Validator\Constraints as Assert;
 
-readonly class CreateChallengeRequestDto {
+readonly final class CreateChallengeRequestDto
+{
 
     #[
         Assert\NotBlank,
         Assert\Type('string')
     ]
-    private mixed $title;
+    public mixed $title;
 
     #[Assert\Type('text')]
-    private mixed $description;
+    public mixed $description;
 
     #[Assert\Choice(callback: [PeriodicityEnum::class, 'values'])]
-    private mixed $schedule;
+    public mixed $schedule;
 
     #[
-        Assert\NotBlank
-        Assert\Type('integer'),
+        Assert\NotBlank,
+        Assert\Type('integer')
     ]
-    private mixed $value;
+    public mixed $value;
 
     #[Assert\Choice(callback: [ChallengeUnitEnum::class, 'values'])]
-    private mixed $unit;
+    public mixed $unit;
 
-    #[Assert\Choice(callback: [ConstraintValidationEnum::class, 'values'])]
-    private mixed $direction;
+    #[Assert\Choice(callback: [ValidationCriteriaEnum::class, 'values'])]
+    public mixed $validationCriteria;
+
+    public function __construct(
+        $title,
+        $schedule,
+        $value,
+        $unit,
+        $validationCriteria,
+        $description = null
+    ) {
+        $this->title = $title;
+        $this->schedule = $schedule;
+        $this->value = $value;
+        $this->unit = $unit;
+        $this->validationCriteria = $validationCriteria;
+        $this->description = $description;
+    }
 }

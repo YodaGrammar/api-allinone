@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "allinoneWorspace"
+  type: workspace
+
+collections:
+  - name: "allinoneCollection"
+    path: "collections/allinoneCollection"
+
+specs:
+
+docs: ''

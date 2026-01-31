@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "allinone-collections",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

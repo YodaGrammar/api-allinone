@@ -1,0 +1,4 @@
+enum.challenge_unit:
+  path: /challenge_unit
+  methods: GET
+  controller: App\Controller\Enum\ReadChallengeUnitController

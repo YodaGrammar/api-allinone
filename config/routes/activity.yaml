@@ -1,0 +1,4 @@
+activity.create:
+  path: /
+  methods: POST
+  controller: App\Controller\Activity\CreateActivityController

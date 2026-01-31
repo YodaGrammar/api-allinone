@@ -1,0 +1,23 @@
+meta {
+  name: CreateUser
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{allinone_url}}/guest/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email":"benoit.taralle@gmail.com",
+    "password":"Footboard5-Preformed6-Tropics2-Lustiness9-Vagueness2"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

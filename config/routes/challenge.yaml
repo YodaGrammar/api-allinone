@@ -1,0 +1,24 @@
+challenge.create:
+  path: /
+  methods: POST
+  controller: App\Controller\Challenge\CreateChallengeController
+
+challenge.read_list:
+  path: /
+  methods: GET
+  controller: App\Controller\Challenge\ReadListChallengeController
+
+challenge.read_one:
+  path: /{challengeId}
+  methods: GET
+  controller: App\Controller\Challenge\ReadOneChallengeController
+
+challenge.update:
+  path: /{challengeId}
+  methods: PATCH
+  controller: App\Controller\Challenge\UpdateChallengeController
+
+challenge.delete:
+  path: /{challengeId}
+  methods: DELETE
+  controller: App\Controller\Challenge\UpdateChallengeController

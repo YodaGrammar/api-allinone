@@ -1,0 +1,26 @@
+meta {
+  name: Create Challenge
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{allinone_url}}/challenge
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "water challenge",
+    "schedule": "daily",
+    "unit": "liters",
+    "validationCriteria": "at_least",
+    "value": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,11 +1,27 @@
-# yaml-language-server: $schema=../vendor/symfony/routing/Loader/schema/routing.schema.json
+api_login_check:
+    path: /login
 
-# This file is the entry point to configure the routes of your app.
-# Methods with the #[Route] attribute are automatically imported.
-# See also https://symfony.com/doc/current/routing.html
+user.me:
+  path: /me
+  methods: GET
+  controller: App\Controller\User\MeController
 
-# To list all registered routes, run the following command:
-#   bin/console debug:router
+guest:
+  resource: routes/guest.yaml
+  prefix: '/guest'
+  trailing_slash_on_root: false
 
-controllers:
-    resource: routing.controllers
+challenge:
+  resource: routes/challenge.yaml
+  prefix: '/challenge'
+  trailing_slash_on_root: false
+
+activity:
+  resource: routes/activity.yaml
+  prefix: '/activity'
+  trailing_slash_on_root: false
+
+enum:
+  resource: routes/enum.yaml
+  prefix: '/enum'
+  trailing_slash_on_root: false

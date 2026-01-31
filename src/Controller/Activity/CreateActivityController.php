@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Activity;
+
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 readonly class CreateActivityController {
 

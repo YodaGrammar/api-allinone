@@ -1,0 +1,4 @@
+guest.create_user:
+  path: /user
+  methods: POST
+  controller: App\Controller\Guest\CreateUserController
