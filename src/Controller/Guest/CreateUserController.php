@@ -1,25 +1,27 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Controller\Guest;
 
-use Symfony\Component\HttpFoundation\Request;
 use App\Exception\InvalidJsonVerboseException;
 use App\RequestDto\Guest\CreateUserRequestDto;
-use Symfony\Component\HttpFoundation\Response;
 use App\UseCase\User\CreateUserUseCaseInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final readonly class CreateUserController{
-
+final readonly class CreateUserController
+{
     public function __construct(
         private SerializerInterface $serializer,
         private ValidatorInterface $validator,
-        private CreateUserUseCaseInterface $useCase
+        private CreateUserUseCaseInterface $useCase,
+    ) {
+    }
 
-    ) {}
-
-    public function __invoke(Request $requuest)
+    public function __invoke(Request $requuest): Response
     {
         $userDto = $this->serializer->deserialize($requuest->getContent(), CreateUserRequestDto::class, 'json');
 

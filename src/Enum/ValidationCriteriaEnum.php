@@ -14,4 +14,3 @@ enum ValidationCriteriaEnum: string
 
     case exact = 'exact';
 }
-

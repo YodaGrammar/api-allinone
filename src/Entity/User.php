@@ -4,62 +4,45 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Symfony\Component\Uid\Ulid;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Types\UlidType;
 use Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Types\UlidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Ignore;
+use Symfony\Component\Uid\Ulid;
 
-
-#[
-    ORM\Entity,
-    ORM\Table(name: 'aio_user'),
-]
+#[ORM\Entity,
+    ORM\Table(name: 'aio_user'),]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: UlidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UlidGenerator::class)]
-    private Ulid $id;
+    public private(set) Ulid $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private string $email;
+    public private(set) string $email;
 
+    /**
+     * @var string[]
+     */
     #[ORM\Column(type: 'json')]
-    private array $roles = [];
+    public private(set) array $roles = [];
 
     #[Ignore]
     #[ORM\Column(type: 'string')]
-    private string $password;
+    public private(set) string $password;
 
-    #[ORM\Column(type: 'string', nullable:true)]
-    private ?string $username;
+    #[ORM\Column(type: 'string', nullable: true)]
+    public private(set) ?string $username;
 
-    #[ORM\Column(type: 'string', nullable:true)]
-    private ?string $firstName;
+    #[ORM\Column(type: 'string', nullable: true)]
+    public private(set) ?string $firstName;
 
-    #[ORM\Column(type: 'string', nullable:true)]
-    private ?string $lastName;
-
-    public function getId(): Ulid
-    {
-        return $this->id;
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
+    #[ORM\Column(type: 'string', nullable: true)]
+    public private(set) ?string $lastName;
 
     public function getRoles(): array
     {
@@ -69,14 +52,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function __construct(string $email)
     {
-        $this->roles = $roles;
-
-        return $this;
+        $this->email = $email;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -88,50 +69,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-	public function getUsername(): ?string
-	{
-		return $this->username;
-	}
-
-	public function setUsername($username): self
-	{
-		$this->username = $username;
-
-		return $this;
-	}
-
-	public function getFirstName(): ?string
-	{
-		return $this->firstName;
-	}
-
-	public function setFirstName($firstName): self
-	{
-		$this->firstName = $firstName;
-
-		return $this;
-	}
-
-    public function getLastName(): ?string
-	{
-		return $this->lastName;
-	}
-
-	public function setLastName($lastName): self
-	{
-		$this->lastName = $lastName;
-
-		return $this;
-	}
-
     #[Ignore]
+    /**
+     * @return non-empty-string
+     */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        if ('' === $this->email) {
+            throw new \LogicException('The username cannot be empty.');
+        }
+
+        return $this->email;
     }
 
     public function eraseCredentials(): void
     {
-        return;
     }
 }

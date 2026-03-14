@@ -16,4 +16,3 @@ enum PeriodicityEnum: string
 
     case YEARLY = 'yearly';
 }
-

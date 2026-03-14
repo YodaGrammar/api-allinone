@@ -18,4 +18,3 @@ enum ChallengeUnitEnum: string
 
     case SESSIONS = 'sessions';
 }
-

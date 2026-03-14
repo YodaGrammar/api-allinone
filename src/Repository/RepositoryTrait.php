@@ -11,12 +11,14 @@ trait RepositoryTrait
     public function persist(object $object): EntityManagerInterface
     {
         $this->getEntityManager()->persist($object);
+
         return $this->getEntityManager();
     }
 
     public function flush(): EntityManagerInterface
     {
         $this->getEntityManager()->flush();
+
         return $this->getEntityManager();
     }
 }

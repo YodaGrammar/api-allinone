@@ -1,0 +1,45 @@
+{
+    "config": {
+        "run-mode": "docker",
+        "run-exec": "docker exec --workdir /app/api-allinone yg_php",
+        "run-path": "vendor/bin/captainhook",
+        "git": "/app/api-allinone/.git",
+        "verbosity": "verbose"
+    },
+    "commit-msg": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "\\CaptainHook\\App\\Hook\\Message\\Action\\Regex",
+                "options": {
+                    "regex": "#^(feat|fix|refactor|chore|doc|test|ci|review|build|style|perf|bc|!|pop|hotfix|wip)(\\([^)]+\\))?: .+#i"
+                }
+            }
+        ]
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "\\CaptainHook\\App\\Hook\\PHP\\Action\\Linting"
+            },
+            {
+                "action": "vendor/bin/phpunit --testsuite=unit --testdox --colors=always"
+            },
+            {
+                "action": "vendor/bin/php-cs-fixer --allow-risky=yes --config=.php-cs-fixer.dist.php --using-cache=no --path-mode=intersection --verbose fix src tests"
+            },
+            {
+                "action": "vendor/bin/phpstan analyse --level=8 --memory-limit=-1 src",
+                "options": []
+            },
+            {
+                "action": "\\CaptainHook\\App\\Hook\\File\\Action\\DoesNotContainRegex",
+                "options": {
+                    "regex": "#(die\\(|var_dump\\(|print_f\\(|dump\\(|exit;)#",
+                    "fileExtensions": ["php"]
+                }
+            }
+        ]
+    }
+}

@@ -2,3 +2,13 @@ enum.challenge_unit:
   path: /challenge_unit
   methods: GET
   controller: App\Controller\Enum\ReadChallengeUnitController
+
+enum.periodicity:
+    path: /periodicity
+    methods: GET
+    controller: App\Controller\Enum\ReadPeriodicityController
+
+enum.validation_criteria:
+    path: /validation_criteria
+    methods: GET
+    controller: App\Controller\Enum\ReadValidationCriteriaController

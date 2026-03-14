@@ -6,12 +6,10 @@ namespace App\RequestDto\Guest;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final readonly class CreateUserRequestDto {
-
-    #[
-        Assert\Type('string'),
-        Assert\Email(mode: 'html5')
-    ]
+final readonly class CreateUserRequestDto
+{
+    #[Assert\Type('string'),
+        Assert\Email(mode: 'html5')]
     public mixed $email;
 
     #[Assert\Type('string')]
@@ -19,7 +17,7 @@ final readonly class CreateUserRequestDto {
 
     public function __construct(
         string $email,
-        string $password
+        string $password,
     ) {
         $this->email = $email;
         $this->password = $password;

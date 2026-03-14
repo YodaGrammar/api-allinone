@@ -4,36 +4,51 @@ declare(strict_types=1);
 
 namespace App\Controller\Challenge;
 
-use Symfony\Component\HttpFoundation\Request;
-use App\Exception\InvalidJsonVerboseException;
-use Symfony\Component\HttpFoundation\Response;
+use App\Exception\InvalidRouteParameterVerboseException;
+use App\RequestDto\QueryParamRequestDto;
+use App\UseCase\Challenge\ReadListChallengeUseCaseInterface;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
-use App\RequestDto\Challenge\CreateChallengeRequestDto;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-readonly class ReadListChallengeController {
-
+readonly class ReadListChallengeController
+{
     public function __construct(
-        private SerializerInterface $serializer,
+        private DenormalizerInterface $denormalizer,
         private ValidatorInterface $validator,
-    ){}
+        private NormalizerInterface $normalizer,
+        private ReadListChallengeUseCaseInterface $useCase,
+    ) {
+    }
 
-    public function __invoke(Request $request): JsonResponse {
+    /**
+     * @throws InvalidRouteParameterVerboseException
+     * @throws ExceptionInterface
+     */
+    public function __invoke(Request $request): JsonResponse
+    {
+        $queryParam = $this->denormalizer->denormalize(
+            HeaderUtils::parseQuery($request->getQueryString() ?? ''),
+            QueryParamRequestDto::class,
+            'json'
+        );
 
-        dump(1);die;
+        $violations = $this->validator->validate($queryParam);
 
-        $challengeDto = $this->serializer->deserialize($request->getContent(), CreateChallengeRequestDto::class, 'json');
-
-        $violations = $this->validator->validate($activityDto);
-
-        if ( $violations->count() > 0) {
-            throw new InvalidJsonVerboseException($violations, CreateChallengeRequestDto::class);
+        if ($violations->count() > 0) {
+            throw new InvalidRouteParameterVerboseException($violations, QueryParamRequestDto::class);
         }
 
         return new JsonResponse(
-            $this->normalizer->normalize($activityDto),
-            Response::HTTP_CREATED
+            $this->normalizer->normalize(
+                data: $this->useCase->readList($queryParam),
+                format: 'json',
+                context: ['groups' => ['challenge:read', 'id', 'history:read']]
+            )
         );
     }
 }

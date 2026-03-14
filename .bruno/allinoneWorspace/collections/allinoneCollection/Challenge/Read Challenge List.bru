@@ -1,0 +1,16 @@
+meta {
+  name: Read Challenge List
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{allinone_url}}/challenge
+  body: json
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

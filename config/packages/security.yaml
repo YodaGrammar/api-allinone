@@ -10,7 +10,7 @@ security:
 
     firewalls:
         dev:
-            pattern: ^/(_profiler|_wdt|assets|build)/
+            pattern: ^/(_profiler|_wdt|assets|build)
             security: false
         login:
             pattern: ^/login
@@ -20,14 +20,13 @@ security:
                 username_path: email
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-
         api:
             pattern:   ^/
             stateless: true
             jwt: ~
 
     access_control:
-        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/(_profiler|_wdt|assets|build|login)/, roles: PUBLIC_ACCESS }
         - { path: ^/guest/*, roles: PUBLIC_ACCESS }
         - { path: ^/enum/*, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
