@@ -6,11 +6,6 @@ namespace App\Entity\Trait;
 
 interface HistoryInterface
 {
-    public function getCreatedAt(): ?\DateTimeImmutable;
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self;
-
-    public function getUpdatedAt(): ?\DateTimeImmutable;
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self;
+    public function onPreUpdate(): void;
+    public function onPrePersist(): void;
 }

@@ -11,33 +11,22 @@ trait HistoryTrait
 {
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['history:read', 'history:write'])]
-    private \DateTimeImmutable $createdAt;
+    public private(set) \DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['history:read', 'history:write'])]
-    private \DateTimeImmutable $updatedAt;
+    public private(set) \DateTimeImmutable $updatedAt;
 
-    public function getCreatedAt(): \DateTimeImmutable
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
     {
-        return $this->createdAt;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): \DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }
