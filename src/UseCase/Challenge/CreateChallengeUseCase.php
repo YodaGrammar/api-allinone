@@ -14,7 +14,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 final readonly class CreateChallengeUseCase implements CreateChallengeUseCaseInterface
 {
     public function __construct(
-        private ChallengeFactory $challengeFactory,
         private ChallengeRepository $repository,
         private Security $security,
     ) {
@@ -26,7 +25,7 @@ final readonly class CreateChallengeUseCase implements CreateChallengeUseCaseInt
         if (false === $user instanceof User) {
             throw new \LogicException('User must be instance of User');
         }
-        $challenge = $this->challengeFactory->create($challengeDto, $user);
+        $challenge = ChallengeFactory::create($challengeDto, $user);
 
         $this->repository->persist($challenge)->flush();
 

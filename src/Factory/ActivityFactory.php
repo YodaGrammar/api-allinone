@@ -9,7 +9,7 @@ use App\RequestDto\Activity\CreateActivityRequestDto;
 
 class ActivityFactory
 {
-    public function create(CreateActivityRequestDto $activityDto, User $user, ?Challenge $challenge = null): Activity
+    public static function create(CreateActivityRequestDto $activityDto, User $user, ?Challenge $challenge = null): Activity
     {
         return new Activity(
             title: $activityDto->title,

@@ -13,7 +13,7 @@ use App\RequestDto\Challenge\CreateChallengeRequestDto;
 
 readonly class ChallengeFactory
 {
-    public function create(CreateChallengeRequestDto $challengeDto, User $user): Challenge
+    public static function create(CreateChallengeRequestDto $challengeDto, User $user): Challenge
     {
         return new Challenge(
             title: $challengeDto->title,
